@@ -47,7 +47,7 @@ export default function Tab() {
         onScroll={onScroll}
         scrollEventThrottle={16}
       >
-        {[...new Array(10).keys()].map((_, i) => (
+        {[...new Array(100).keys()].map((_, i) => (
           <CustomCard key={i} />
         ))}
       </ScrollView>

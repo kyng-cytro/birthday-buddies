@@ -1,3 +1,4 @@
+import { appStyles } from "@/assets/styles";
 import type { BottomTabBarProps } from "@react-navigation/bottom-tabs/lib/typescript/commonjs/src/types";
 import { CommonActions } from "@react-navigation/native";
 import { BottomNavigation } from "react-native-paper";
