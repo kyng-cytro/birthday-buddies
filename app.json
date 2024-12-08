@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "birthday-buddies",
+    "name": "Birthday Buddies",
     "slug": "birthday-buddies",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -14,8 +14,9 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "backgroundColor": "#F5F5F5"
+      },
+      "package": "com.cytro.birthdaybuddies"
     },
     "web": {
       "bundler": "metro",
@@ -28,9 +29,9 @@
         "expo-splash-screen",
         {
           "image": "./assets/images/splash-icon.png",
-          "imageWidth": 200,
+          "imageWidth": 100,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "backgroundColor": "#F5F5F5"
         }
       ]
     ],
