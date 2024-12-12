@@ -1,9 +1,13 @@
+import { tabStyles } from "@/assets/styles";
 import CustomBottomNavigation from "@/components/CustomBottomNavigation";
 import CustomNavigationBar from "@/components/CustomNavigationBar";
 import { Tabs } from "expo-router";
-import { Icon } from "react-native-paper";
+import { Image } from "react-native";
+import { Icon, useTheme } from "react-native-paper";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function TabLayout() {
+export default function AppLayout() {
+  const theme = useTheme();
   return (
     <Tabs
       initialRouteName="index"
@@ -15,16 +19,31 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Birthdays",
+          title: "Home",
+          header: () => (
+            <SafeAreaView
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: theme.colors.background,
+              }}
+            >
+              <Image
+                style={tabStyles.logo}
+                source={require("@/assets/images/icon.png")}
+              />
+            </SafeAreaView>
+          ),
           tabBarIcon: ({ size, color }) => {
             return <Icon source="cake" size={size} color={color} />;
           },
         }}
       />
       <Tabs.Screen
-        name="contacts"
+        name="buddies"
         options={{
-          title: "Contacts",
+          title: "Buddies",
           tabBarIcon: ({ size, color }) => (
             <Icon source="contacts" size={size} color={color} />
           ),

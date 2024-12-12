@@ -1,7 +1,7 @@
 import { StyleSheet, View } from "react-native";
 import { Avatar, Text, TouchableRipple, useTheme } from "react-native-paper";
 
-export default function CustomCard() {
+export default function BirthdayCard() {
   const theme = useTheme();
   return (
     <TouchableRipple onPress={() => console.log("Card Pressed")}>

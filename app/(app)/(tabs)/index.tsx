@@ -1,27 +1,22 @@
 import { tabStyles } from "@/assets/styles";
-import CustomCard from "@/components/App/Card";
+import BirthdayCard from "@/components/App/Cards/Birthday";
+import InfoCard from "@/components/App/Cards/Info";
+import CustomView from "@/components/App/Views/CustomView";
 import useOnScroll from "@/hooks/on-scroll";
 import React from "react";
 import { ScrollView, View } from "react-native";
-import {
-  AnimatedFAB,
-  SegmentedButtons,
-  Text,
-  useTheme,
-} from "react-native-paper";
+import { AnimatedFAB, SegmentedButtons, Text } from "react-native-paper";
 
 export default function Tab() {
-  const theme = useTheme();
   const [value, setValue] = React.useState("this-week");
   const [extended, setExtended] = React.useState(true);
   const onScroll = useOnScroll((value) => setExtended(value));
   return (
-    <View
-      style={{
-        ...tabStyles.container,
-        backgroundColor: theme.colors.background,
-      }}
-    >
+    <CustomView style={tabStyles.container}>
+      <View style={{ flexDirection: "row", gap: 10 }}>
+        <InfoCard title="Upcoming" subtitle="This Week" value="3 Birthdays" />
+        <InfoCard title="Budget" subtitle="This Month" secondary value="$250" />
+      </View>
       <Text style={tabStyles.helperText}>Upcoming birthdays</Text>
       <SegmentedButtons
         value={value}
@@ -48,7 +43,7 @@ export default function Tab() {
         scrollEventThrottle={16}
       >
         {[...new Array(100).keys()].map((_, i) => (
-          <CustomCard key={i} />
+          <BirthdayCard key={i} />
         ))}
       </ScrollView>
       <AnimatedFAB
@@ -58,6 +53,6 @@ export default function Tab() {
         style={tabStyles.fabStyle}
         onPress={() => console.log("Fab Pressed")}
       />
-    </View>
+    </CustomView>
   );
 }
