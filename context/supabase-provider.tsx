@@ -64,6 +64,8 @@ export const SupabaseProvider = ({ children }: SupabaseProviderProps) => {
     }
   };
 
+  const test = "";
+
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);

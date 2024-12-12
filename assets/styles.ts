@@ -2,9 +2,7 @@ import { StyleSheet } from "react-native";
 
 export const tabStyles = StyleSheet.create({
   container: {
-    flex: 1,
     gap: 15,
-    padding: 15,
     flexDirection: "column",
   },
   logo: {
