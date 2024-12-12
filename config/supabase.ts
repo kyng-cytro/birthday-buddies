@@ -32,8 +32,8 @@ class SupabaseStorage {
 
 export const supabase = createClient(supabaseUrl, supabaseKey, {
   auth: {
-    autoRefreshToken: true,
     persistSession: true,
+    autoRefreshToken: true,
     detectSessionInUrl: false,
     storage: new SupabaseStorage(),
   },

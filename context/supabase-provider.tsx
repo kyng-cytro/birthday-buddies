@@ -64,8 +64,6 @@ export const SupabaseProvider = ({ children }: SupabaseProviderProps) => {
     }
   };
 
-  const test = "";
-
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
@@ -81,9 +79,7 @@ export const SupabaseProvider = ({ children }: SupabaseProviderProps) => {
 
   useEffect(() => {
     if (!initialized) return;
-
     const inProtectedGroup = segments[1] === "(tabs)";
-
     if (session && !inProtectedGroup) {
       router.replace("/(app)/(tabs)");
     } else if (!session) {
