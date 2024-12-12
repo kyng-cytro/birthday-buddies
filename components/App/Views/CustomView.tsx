@@ -8,7 +8,6 @@ export default function CustomView(props: View["props"]) {
       {...props}
       style={{
         flex: 1,
-        padding: 15,
         backgroundColor: theme.colors.background,
         ...(props.style as object),
       }}

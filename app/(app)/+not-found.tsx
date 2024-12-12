@@ -16,6 +16,7 @@ export default function NotFound() {
 const styles = StyleSheet.create({
   container: {
     gap: 5,
+    padding: 15,
     alignItems: "center",
     justifyContent: "center",
   },

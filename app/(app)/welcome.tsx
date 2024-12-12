@@ -37,6 +37,7 @@ export default function Welcome() {
 
 const styles = StyleSheet.create({
   container: {
+    padding: 15,
     flexDirection: "column",
   },
   topContainer: {
