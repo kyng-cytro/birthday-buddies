@@ -1,0 +1,13 @@
+diff --git a/src/components/BottomNavigation/BottomNavigationBar.tsx b/src/components/BottomNavigation/BottomNavigationBar.tsx
+index 0bfe303bfb443396ede776726faa0f8ba32752cd..8d3d47fc66a7d9a184ad665248a09a8f4af58729 100644
+--- a/src/components/BottomNavigation/BottomNavigationBar.tsx
++++ b/src/components/BottomNavigation/BottomNavigationBar.tsx
+@@ -360,7 +360,7 @@ const BottomNavigationBar = <Route extends BaseRoute>({
+   navigationState,
+   renderIcon,
+   renderLabel,
+-  renderTouchable = (props: TouchableProps<Route>) => <Touchable {...props} />,
++  renderTouchable = ({key, ...props}: TouchableProps<Route>) => <Touchable key={key} {...props} />,
+   getLabelText = ({ route }: { route: Route }) => route.title,
+   getBadge = ({ route }: { route: Route }) => route.badge,
+   getColor = ({ route }: { route: Route }) => route.color,

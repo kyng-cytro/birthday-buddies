@@ -50,5 +50,8 @@
     "react-test-renderer": "18.3.1",
     "typescript": "^5.3.3"
   },
-  "private": true
+  "private": true,
+  "patchedDependencies": {
+    "react-native-paper@5.12.5": "patches/react-native-paper@5.12.5.patch"
+  }
 }
