@@ -1,5 +1,6 @@
 import { Session, User } from "@supabase/supabase-js";
-import { useRouter, useSegments, SplashScreen } from "expo-router";
+import * as QueryParams from "expo-auth-session/build/QueryParams";
+import { SplashScreen, useRouter, useSegments } from "expo-router";
 import { createContext, useContext, useEffect, useState } from "react";
 
 import { supabase } from "@/config/supabase";
@@ -10,9 +11,9 @@ type SupabaseContextProps = {
   user: User | null;
   session: Session | null;
   initialized?: boolean;
-  signUp: (email: string, password: string) => Promise<void>;
-  signInWithPassword: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
+  createSessionFromUrl: (url: string) => Promise<Session | null | undefined>;
+  sendMagicLink: (email: string, redirectTo: string) => Promise<void>;
 };
 
 type SupabaseProviderProps = {
@@ -23,9 +24,9 @@ export const SupabaseContext = createContext<SupabaseContextProps>({
   user: null,
   session: null,
   initialized: false,
-  signUp: async () => {},
-  signInWithPassword: async () => {},
   signOut: async () => {},
+  sendMagicLink: async () => {},
+  createSessionFromUrl: async () => undefined,
 });
 
 export const useSupabase = () => useContext(SupabaseContext);
@@ -37,24 +38,27 @@ export const SupabaseProvider = ({ children }: SupabaseProviderProps) => {
   const [session, setSession] = useState<Session | null>(null);
   const [initialized, setInitialized] = useState<boolean>(false);
 
-  const signUp = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signUp({
+  const sendMagicLink = async (email: string, redirectTo: string) => {
+    const { error } = await supabase.auth.signInWithOtp({
       email,
-      password,
+      options: {
+        emailRedirectTo: redirectTo,
+      },
     });
-    if (error) {
-      throw error;
-    }
+    if (error) throw error;
   };
 
-  const signInWithPassword = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
+  const createSessionFromUrl = async (url: string) => {
+    const { params, errorCode } = QueryParams.getQueryParams(url);
+    if (errorCode) throw new Error(errorCode);
+    const { access_token, refresh_token } = params;
+    if (!access_token) return;
+    const { data, error } = await supabase.auth.setSession({
+      access_token,
+      refresh_token,
     });
-    if (error) {
-      throw error;
-    }
+    if (error) throw error;
+    return data.session;
   };
 
   const signOut = async () => {
@@ -102,9 +106,9 @@ export const SupabaseProvider = ({ children }: SupabaseProviderProps) => {
         user,
         session,
         initialized,
-        signUp,
-        signInWithPassword,
         signOut,
+        sendMagicLink,
+        createSessionFromUrl,
       }}
     >
       {children}

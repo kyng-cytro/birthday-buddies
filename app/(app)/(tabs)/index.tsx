@@ -2,17 +2,36 @@ import { tabStyles } from "@/assets/styles";
 import BirthdayCard from "@/components/App/Cards/Birthday";
 import InfoCard from "@/components/App/Cards/Info";
 import CustomView from "@/components/App/Views/CustomView";
+import { useSupabase } from "@/context/supabase-provider";
 import useOnScroll from "@/hooks/on-scroll";
 import React from "react";
 import { ScrollView, View } from "react-native";
-import { AnimatedFAB, SegmentedButtons, Text } from "react-native-paper";
+import {
+  AnimatedFAB,
+  Button,
+  SegmentedButtons,
+  Text,
+} from "react-native-paper";
 
 export default function Tab() {
-  const [value, setValue] = React.useState("this-week");
+  const { user, signOut } = useSupabase();
   const [extended, setExtended] = React.useState(true);
+  const [value, setValue] = React.useState("this-week");
   const onScroll = useOnScroll((value) => setExtended(value));
   return (
     <CustomView style={tabStyles.container}>
+      <View
+        style={{
+          alignItems: "center",
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}
+      >
+        <Text>Hi {user?.email}</Text>
+        <Button mode="text" onPress={() => signOut()}>
+          Sign Out
+        </Button>
+      </View>
       <View style={{ flexDirection: "row", gap: 10 }}>
         <InfoCard title="Upcoming" subtitle="This Week" value="3 Birthdays" />
         <InfoCard title="Budget" subtitle="This Month" secondary value="$250" />
