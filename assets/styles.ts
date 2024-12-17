@@ -20,4 +20,10 @@ export const tabStyles = StyleSheet.create({
   scrollView: {
     flex: 1,
   },
+  button: {
+    maxWidth: 350,
+    width: "100%",
+    paddingVertical: 5,
+    marginHorizontal: "auto",
+  },
 });

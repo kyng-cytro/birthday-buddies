@@ -1,10 +1,17 @@
 import CustomView from "@/components/App/Views/CustomView";
+import { useSupabase } from "@/context/supabase-provider";
+import * as Linking from "expo-linking";
 import { router } from "expo-router";
+import * as WebBrowser from "expo-web-browser";
 import { Image, StyleSheet, View } from "react-native";
-import { Button, Text, useTheme } from "react-native-paper";
+import { Button, Text } from "react-native-paper";
+
+WebBrowser.maybeCompleteAuthSession();
 
 export default function Welcome() {
-  const theme = useTheme();
+  const { createSessionFromUrl } = useSupabase();
+  const url = Linking.useURL();
+  if (url) createSessionFromUrl(url);
   return (
     <CustomView style={styles.container}>
       <View style={styles.topContainer}>
@@ -23,10 +30,7 @@ export default function Welcome() {
         <Button
           onPress={() => router.navigate("/(app)/sign-in")}
           mode="contained"
-          style={{
-            ...styles.button,
-            backgroundColor: theme.colors.onBackground,
-          }}
+          style={styles.button}
         >
           Get Started
         </Button>
