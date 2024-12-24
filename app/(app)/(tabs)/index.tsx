@@ -5,7 +5,8 @@ import CustomView from "@/components/App/Views/CustomView";
 import { useSupabase } from "@/context/supabase-provider";
 import useOnScroll from "@/hooks/on-scroll";
 import React from "react";
-import { ScrollView, View } from "react-native";
+import { Platform } from "react-native";
+import { FlatList, View } from "react-native";
 import {
   AnimatedFAB,
   Button,
@@ -56,15 +57,13 @@ export default function Tab() {
           },
         ]}
       />
-      <ScrollView
-        style={tabStyles.scrollView}
+      <FlatList
         onScroll={onScroll}
         scrollEventThrottle={16}
-      >
-        {[...new Array(100).keys()].map((_, i) => (
-          <BirthdayCard key={i} />
-        ))}
-      </ScrollView>
+        data={[...new Array(100).keys()]}
+        renderItem={({ item }) => <BirthdayCard key={item} />}
+        showsVerticalScrollIndicator={Platform.OS !== "web"}
+      />
       <AnimatedFAB
         label="Add Birthday"
         icon="cake"
