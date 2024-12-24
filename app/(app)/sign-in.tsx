@@ -19,7 +19,7 @@ import {
 const redirectTo = makeRedirectUri();
 
 export default function SignIn() {
-  const { sendMagicLink } = useSupabase();
+  const { sendMagicLink, performOAuth } = useSupabase();
   const {
     control,
     handleSubmit,
@@ -74,14 +74,14 @@ export default function SignIn() {
             icon="google"
             mode="contained"
             style={styles.iconButton}
-            onPress={() => console.log("google")}
+            onPress={() => performOAuth("google", redirectTo)}
           />
           <IconButton
             size={25}
             icon="twitter"
             mode="contained"
             style={styles.iconButton}
-            onPress={() => console.log("twitter")}
+            onPress={() => performOAuth("twitter", redirectTo)}
           />
         </View>
       </View>

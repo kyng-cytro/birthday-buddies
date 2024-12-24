@@ -1,6 +1,7 @@
 import { Session, User } from "@supabase/supabase-js";
 import * as QueryParams from "expo-auth-session/build/QueryParams";
 import { SplashScreen, useRouter, useSegments } from "expo-router";
+import * as WebBrowser from "expo-web-browser";
 import { createContext, useContext, useEffect, useState } from "react";
 
 import { supabase } from "@/config/supabase";
@@ -14,6 +15,10 @@ type SupabaseContextProps = {
   signOut: () => Promise<void>;
   createSessionFromUrl: (url: string) => Promise<Session | null | undefined>;
   sendMagicLink: (email: string, redirectTo: string) => Promise<void>;
+  performOAuth: (
+    provider: "twitter" | "google",
+    redirectTo: string,
+  ) => Promise<void>;
 };
 
 type SupabaseProviderProps = {
@@ -26,6 +31,7 @@ export const SupabaseContext = createContext<SupabaseContextProps>({
   initialized: false,
   signOut: async () => {},
   sendMagicLink: async () => {},
+  performOAuth: async () => {},
   createSessionFromUrl: async () => undefined,
 });
 
@@ -46,6 +52,30 @@ export const SupabaseProvider = ({ children }: SupabaseProviderProps) => {
       },
     });
     if (error) throw error;
+  };
+
+  const performOAuth = async (
+    provider: "twitter" | "google",
+    redirectTo: string,
+  ) => {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider,
+      options: {
+        redirectTo,
+        skipBrowserRedirect: true,
+      },
+    });
+    if (error) throw error;
+
+    const res = await WebBrowser.openAuthSessionAsync(
+      data?.url ?? "",
+      redirectTo,
+    );
+
+    if (res.type === "success") {
+      const { url } = res;
+      await createSessionFromUrl(url);
+    }
   };
 
   const createSessionFromUrl = async (url: string) => {
@@ -86,7 +116,7 @@ export const SupabaseProvider = ({ children }: SupabaseProviderProps) => {
     const inProtectedGroup = segments[1] === "(tabs)";
     if (session && !inProtectedGroup) {
       router.replace("/(app)/(tabs)");
-    } else if (!session) {
+    } else if (!session && inProtectedGroup) {
       router.replace("/(app)/welcome");
     }
 
@@ -105,8 +135,9 @@ export const SupabaseProvider = ({ children }: SupabaseProviderProps) => {
       value={{
         user,
         session,
-        initialized,
         signOut,
+        initialized,
+        performOAuth,
         sendMagicLink,
         createSessionFromUrl,
       }}
