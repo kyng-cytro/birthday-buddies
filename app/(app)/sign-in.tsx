@@ -29,7 +29,7 @@ export default function SignIn() {
   });
   const onSubmit: SubmitHandler<SignIn> = async ({ email }) => {
     await sendMagicLink(email, redirectTo);
-    return router.navigate("/(app)/check-email");
+    return router.navigate(`/(app)/check-email?email=${email}`, {});
   };
   return (
     <CustomView style={styles.container}>
