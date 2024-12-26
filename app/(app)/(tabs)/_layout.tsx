@@ -1,13 +1,9 @@
-import { tabStyles } from "@/assets/styles";
 import CustomBottomNavigation from "@/components/CustomBottomNavigation";
 import CustomNavigationBar from "@/components/CustomNavigationBar";
 import { Tabs } from "expo-router";
-import { Image } from "react-native";
-import { Icon, useTheme } from "react-native-paper";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { Icon } from "react-native-paper";
 
 export default function AppLayout() {
-  const theme = useTheme();
   return (
     <Tabs
       initialRouteName="index"
@@ -19,25 +15,11 @@ export default function AppLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
-          header: () => (
-            <SafeAreaView
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: theme.colors.background,
-              }}
-            >
-              <Image
-                style={tabStyles.logo}
-                source={require("@/assets/images/icon.png")}
-              />
-            </SafeAreaView>
-          ),
+          title: "Birthdays",
           tabBarIcon: ({ size, color }) => {
             return <Icon source="cake" size={size} color={color} />;
           },
+          animation: "shift",
         }}
       />
       <Tabs.Screen
@@ -47,6 +29,7 @@ export default function AppLayout() {
           tabBarIcon: ({ size, color }) => (
             <Icon source="contacts" size={size} color={color} />
           ),
+          animation: "shift",
         }}
       />
       <Tabs.Screen
@@ -56,6 +39,7 @@ export default function AppLayout() {
           tabBarIcon: ({ size, color }) => (
             <Icon source="chart-sankey" size={size} color={color} />
           ),
+          animation: "shift",
         }}
       />
       <Tabs.Screen
@@ -65,6 +49,7 @@ export default function AppLayout() {
           tabBarIcon: ({ size, color }) => (
             <Icon source="account" size={size} color={color} />
           ),
+          animation: "shift",
         }}
       />
     </Tabs>
