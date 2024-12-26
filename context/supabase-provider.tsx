@@ -1,10 +1,9 @@
+import { supabase } from "@/config/supabase";
 import { Session, User } from "@supabase/supabase-js";
 import * as QueryParams from "expo-auth-session/build/QueryParams";
 import { SplashScreen, useRouter, useSegments } from "expo-router";
 import * as WebBrowser from "expo-web-browser";
 import { createContext, useContext, useEffect, useState } from "react";
-
-import { supabase } from "@/config/supabase";
 
 SplashScreen.preventAutoHideAsync();
 

@@ -1,7 +1,10 @@
 import { BottomTabHeaderProps } from "@react-navigation/bottom-tabs";
 import { getHeaderTitle } from "@react-navigation/elements";
 import React from "react";
+import { Platform } from "react-native";
 import { Appbar, useTheme } from "react-native-paper";
+
+const MORE_ICON = Platform.OS === "ios" ? "dots-horizontal" : "dots-vertical";
 
 export default function CustomNavigationBar({
   navigation,
@@ -17,15 +20,16 @@ export default function CustomNavigationBar({
   const theme = useTheme();
   const title = getHeaderTitle(options, route.name);
   return (
-    <Appbar.Header mode="medium">
+    <Appbar.Header>
       {back ? <Appbar.BackAction onPress={navigation.goBack} /> : null}
       <Appbar.Content
         title={title}
         titleStyle={{
           ...theme.fonts.headlineLarge,
-          fontWeight: "bold",
+          ...(route.name === "index" && { fontWeight: "bold" }),
         }}
       />
+      <Appbar.Action icon={MORE_ICON} onPress={() => {}} />
     </Appbar.Header>
   );
 }
